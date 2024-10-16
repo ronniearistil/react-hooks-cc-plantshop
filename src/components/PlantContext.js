@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import PlantPage from "./PlantPage";
+import React, { createContext, useState, useEffect } from 'react';
 
-// Core Deliverables: App component to handle state and fetch plants
-function App() {
+// Create the context
+const PlantContext = createContext();
+
+// Create the provider component
+function PlantProvider({ children }) {
   const [plants, setPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Core Deliverables: Fetch plant data from the Server
+  // Fetch the plants from the backend
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((res) => res.json())
       .then((data) => setPlants(data));
   }, []);
 
-  // Core Deliverables: Add new plant to the state
+  // Function to add a new plant
   const addPlant = (newPlant) => {
     setPlants([...plants, newPlant]);
   };
 
-  // Core Deliverables: Handle search input and filter plants
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
-
-  // Advanced: Update the plant price
+  // Function to update a plant's price
   const updatePlantPrice = (id, newPrice) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "PATCH",
@@ -42,7 +38,7 @@ function App() {
       });
   };
 
-  // Advanced: Delete a plant
+  // Function to delete a plant
   const deletePlant = (id) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "DELETE",
@@ -52,23 +48,21 @@ function App() {
     });
   };
 
-  // Core Deliverables: Filter plants by search term
-  const displayedPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  // Provide the state and functions to children components
   return (
-    <div className="app">
-      <Header />
-      <PlantPage
-        plants={displayedPlants}
-        onAddPlant={addPlant}
-        onSearch={handleSearch}
-        onUpdatePrice={updatePlantPrice} // Advanced: Pass down the update price function
-        onDeletePlant={deletePlant} // Advanced: Pass down the delete plant function
-      />
-    </div>
+    <PlantContext.Provider
+      value={{
+        plants,
+        addPlant,
+        updatePlantPrice,
+        deletePlant,
+        searchTerm,
+        setSearchTerm,
+      }}
+    >
+      {children}
+    </PlantContext.Provider>
   );
 }
 
-export default App;
+export { PlantContext, PlantProvider };
