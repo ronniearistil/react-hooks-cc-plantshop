@@ -1,11 +1,8 @@
+// Core Deliverables: Import React
 import React from "react";
 
-// Core Deliverables: Search component to filter plants by name
+// Core Deliverables: Search component for filtering plants
 function Search({ onSearch }) {
-  const handleInputChange = (e) => {
-    onSearch(e.target.value);
-  };
-
   return (
     <div className="searchbar">
       <label htmlFor="search">Search Plants:</label>
@@ -13,11 +10,12 @@ function Search({ onSearch }) {
         type="text"
         id="search"
         placeholder="Type a name to search..."
-        onChange={handleInputChange}
+        onChange={onSearch} // Core Deliverables: Call onSearch when input changes
       />
     </div>
   );
 }
 
 export default Search;
+
 

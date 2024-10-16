@@ -1,3 +1,4 @@
+// Core Deliverables: Import React and necessary components
 import React, { useContext } from "react";
 import NewPlantForm from "./NewPlantForm";
 import PlantList from "./PlantList";
@@ -5,8 +6,15 @@ import Search from "./Search";
 import { PlantContext } from "./PlantContext"; // Import the context
 
 function PlantPage() {
-  // Core Deliverables: Access plants and addPlant from context
-  const { plants, addPlant, searchTerm, setSearchTerm, updatePlantPrice, deletePlant } = useContext(PlantContext);
+  // Core Deliverables: Access all functions and state from context
+  const {
+    plants, 
+    addPlant, 
+    searchTerm, 
+    setSearchTerm, 
+    updatePlantPrice, // Advanced Deliverables: Price update function
+    deletePlant, // Advanced Deliverables: Delete plant function
+  } = useContext(PlantContext);
 
   // Core Deliverables: Filter the plants based on the search term
   const displayedPlants = plants.filter((plant) =>
@@ -27,5 +35,7 @@ function PlantPage() {
 }
 
 export default PlantPage;
+
+
 
 
