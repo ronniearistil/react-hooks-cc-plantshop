@@ -1,7 +1,7 @@
 import React from "react";
 import PlantCard from "./PlantCard";
 
-// Core Deliverables: Map over plants array and render PlantCard components
+// Core Deliverables: Display plant cards and pass update/delete handlers
 function PlantList({ plants, onUpdatePrice, onDeletePlant }) {
   return (
     <ul className="cards">
@@ -9,8 +9,8 @@ function PlantList({ plants, onUpdatePrice, onDeletePlant }) {
         <PlantCard
           key={plant.id}
           plant={plant}
-          onUpdatePrice={onUpdatePrice} // Advanced: Pass down update function
-          onDeletePlant={onDeletePlant} // Advanced: Pass down delete function
+          onUpdatePrice={onUpdatePrice} // Advanced Deliverables
+          onDeletePlant={onDeletePlant} // Advanced Deliverables
         />
       ))}
     </ul>
@@ -18,5 +18,6 @@ function PlantList({ plants, onUpdatePrice, onDeletePlant }) {
 }
 
 export default PlantList;
+
 
 

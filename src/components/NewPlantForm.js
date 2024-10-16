@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { PlantContext } from "./PlantContext"; // Import the context
 
 // Core Deliverables: Form to add new plants
-function NewPlantForm({ onAddPlant }) {
+function NewPlantForm() {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
     price: ""
   });
+
+  const { addPlant } = useContext(PlantContext); // Core Deliverables: Access addPlant from context
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +28,7 @@ function NewPlantForm({ onAddPlant }) {
     })
       .then((res) => res.json())
       .then((newPlant) => {
-        onAddPlant(newPlant);
+        addPlant(newPlant); // Core Deliverables: Call addPlant from context
         setFormData({ name: "", image: "", price: "" }); // Clear form after submit
       });
   };
@@ -63,4 +66,5 @@ function NewPlantForm({ onAddPlant }) {
 }
 
 export default NewPlantForm;
+
 

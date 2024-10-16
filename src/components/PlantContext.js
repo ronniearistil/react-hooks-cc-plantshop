@@ -8,19 +8,19 @@ function PlantProvider({ children }) {
   const [plants, setPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch the plants from the backend
+  // Core Deliverables: Fetch the plants from the backend
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((res) => res.json())
       .then((data) => setPlants(data));
   }, []);
 
-  // Function to add a new plant
+  // Core Deliverables: Function to add a new plant
   const addPlant = (newPlant) => {
     setPlants([...plants, newPlant]);
   };
 
-  // Function to update a plant's price
+  // Advanced Deliverables: Function to update a plant's price
   const updatePlantPrice = (id, newPrice) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "PATCH",
@@ -38,7 +38,7 @@ function PlantProvider({ children }) {
       });
   };
 
-  // Function to delete a plant
+  // Advanced Deliverables: Function to delete a plant
   const deletePlant = (id) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "DELETE",
@@ -53,9 +53,9 @@ function PlantProvider({ children }) {
     <PlantContext.Provider
       value={{
         plants,
-        addPlant,
-        updatePlantPrice,
-        deletePlant,
+        addPlant, // Core Deliverables
+        updatePlantPrice, // Advanced Deliverables
+        deletePlant, // Advanced Deliverables
         searchTerm,
         setSearchTerm,
       }}

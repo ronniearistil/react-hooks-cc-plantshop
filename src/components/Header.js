@@ -1,5 +1,6 @@
 import React from "react";
 
+// Core Deliverables: Display the app's header
 function Header() {
   return (
     <header>
@@ -14,3 +15,4 @@ function Header() {
 }
 
 export default Header;
+
