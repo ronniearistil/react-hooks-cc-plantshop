@@ -1,6 +1,7 @@
 import React from "react";
 
-// Core Deliverables: Display the app's header
+// Core Deliverables
+// Display the app's header
 function Header() {
   return (
     <header>

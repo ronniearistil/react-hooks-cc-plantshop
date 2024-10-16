@@ -1,26 +1,29 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Create the context
+//  This creates the context
 const PlantContext = createContext();
 
-// Create the provider component
+// This creates the provider component
 function PlantProvider({ children }) {
-  const [plants, setPlants] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [plants, setPlants] = useState([]); //State to hold plants
+  const [searchTerm, setSearchTerm] = useState(""); //State for search term
 
-  // Core Deliverables: Fetch the plants from the backend
+  // Core Deliverables
+  // Fetch the plants from the server
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((res) => res.json())
       .then((data) => setPlants(data));
   }, []);
 
-  // Core Deliverables: Function to add a new plant
+  // Core Deliverables
+  // Function to add a new plant
   const addPlant = (newPlant) => {
     setPlants([...plants, newPlant]);
   };
 
-  // Advanced Deliverables: Function to update a plant's price
+  // Advanced Deliverables
+  // Function to update a plant's price
   const updatePlantPrice = (id, newPrice) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "PATCH",
@@ -38,7 +41,8 @@ function PlantProvider({ children }) {
       });
   };
 
-  // Advanced Deliverables: Function to delete a plant
+  // Advanced Deliverables
+  // Function to delete a plant
   const deletePlant = (id) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "DELETE",
