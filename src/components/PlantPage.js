@@ -1,30 +1,28 @@
-// Core Deliverables: Import React and necessary components
-import React, { useContext } from "react";
+// Core Deliverables: Import React and components
+import React, { useContext, useState, useEffect } from "react";
 import NewPlantForm from "./NewPlantForm";
 import PlantList from "./PlantList";
 import Search from "./Search";
-import { PlantContext } from "./PlantContext"; // Import the context
+import { PlantContext } from "./PlantContext"; // Import context
 
 function PlantPage() {
-  // Core Deliverables: Access all functions and state from context
-  const {
-    plants, 
-    addPlant, 
-    searchTerm, 
-    setSearchTerm, 
-    updatePlantPrice, // Advanced Deliverables: Price update function
-    deletePlant, // Advanced Deliverables: Delete plant function
-  } = useContext(PlantContext);
+  const { plants, addPlant, updatePlantPrice, deletePlant } = useContext(PlantContext);
 
-  // Core Deliverables: Filter the plants based on the search term
+  // Core Deliverables: Manage search term locally within this component
+  const [searchTerm, setSearchTerm] = useState(""); 
+
+  // Core Deliverables: Filter plants based on search term
   const displayedPlants = plants.filter((plant) =>
     plant.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Core Deliverables: Ensure search input updates correctly without triggering disappearance
+  const handleSearch = (e) => setSearchTerm(e.target.value);
+
   return (
     <main>
       <NewPlantForm onAddPlant={addPlant} /> {/* Core Deliverables */}
-      <Search onSearch={setSearchTerm} /> {/* Core Deliverables */}
+      <Search onSearch={handleSearch} /> {/* Core Deliverables */}
       <PlantList
         plants={displayedPlants} 
         onUpdatePrice={updatePlantPrice} // Advanced Deliverables
@@ -35,6 +33,7 @@ function PlantPage() {
 }
 
 export default PlantPage;
+
 
 
 

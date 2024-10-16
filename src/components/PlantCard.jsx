@@ -2,29 +2,30 @@
 import React, { useState } from "react";
 
 function PlantCard({ plant, onUpdatePrice, onDeletePlant }) {
-  // Core Deliverables: Track sold-out state
-  const [soldOut, setSoldOut] = useState(false);
+  const [soldOut, setSoldOut] = useState(false); // Core Deliverables: Track sold-out status
+  const [price, setPrice] = useState(plant.price); // Advanced Deliverables: Track price changes
 
-  // Advanced Deliverables: Track the price input value
-  const [price, setPrice] = useState(plant.price);
+  // Core Deliverables: Toggle sold-out status
+  const toggleSoldOut = () => {
+    setSoldOut((prevStatus) => !prevStatus); // Toggle the state
+  };
 
-  // Core Deliverables: Toggle sold-out state when the button is clicked
-  const toggleSoldOut = () => setSoldOut((prev) => !prev);
+  // Advanced Deliverables: Handle price input changes
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value); // Update the price input value
+  };
 
-  // Advanced Deliverables: Update price input as user types
-  const handlePriceChange = (e) => setPrice(e.target.value);
-
-  // Advanced Deliverables: Trigger price update from the parent component
+  // Advanced Deliverables: Trigger price update via onClick
   const updatePrice = () => {
     if (onUpdatePrice) {
-      onUpdatePrice(plant.id, parseFloat(price));
+      onUpdatePrice(plant.id, parseFloat(price)); // Call the function from props
     }
   };
 
-  // Advanced Deliverables: Trigger plant deletion from the parent component
+  // Advanced Deliverables: Trigger plant deletion via onClick
   const deletePlant = () => {
     if (onDeletePlant) {
-      onDeletePlant(plant.id);
+      onDeletePlant(plant.id); // Call the function from props
     }
   };
 
@@ -34,7 +35,7 @@ function PlantCard({ plant, onUpdatePrice, onDeletePlant }) {
       <h4>{plant.name}</h4>
       <p>Price: ${price}</p>
 
-      {/* Advanced Deliverables: Price input to allow users to modify the plant's price */}
+      {/* Advanced Deliverables: Input to change price */}
       <input
         type="number"
         step="0.01"
@@ -45,15 +46,15 @@ function PlantCard({ plant, onUpdatePrice, onDeletePlant }) {
         Update Price
       </button>
 
-      {/* Core Deliverables: Toggle sold-out state */}
+      {/* Core Deliverables: Button to toggle sold-out status */}
       <button
-        className={soldOut ? "out-of-stock" : "primary"}
         onClick={toggleSoldOut}
+        className={soldOut ? "out-of-stock" : "primary"}
       >
         {soldOut ? "Out of Stock" : "In Stock"}
       </button>
 
-      {/* Advanced Deliverables: Delete the plant */}
+      {/* Advanced Deliverables: Button to delete the plant */}
       <button className="delete" onClick={deletePlant}>
         Delete Plant
       </button>
@@ -62,5 +63,6 @@ function PlantCard({ plant, onUpdatePrice, onDeletePlant }) {
 }
 
 export default PlantCard;
+
 
 

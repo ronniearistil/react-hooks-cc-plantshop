@@ -1,68 +1,44 @@
-import React, { createContext, useState, useEffect } from 'react';
+// Core Deliverables: Import React, createContext, and hooks
+import React, { createContext, useState, useEffect } from "react";
 
-//  This creates the context
-const PlantContext = createContext();
+const PlantContext = createContext(); // Core Deliverables: Create context
 
-// This creates the provider component
 function PlantProvider({ children }) {
-  const [plants, setPlants] = useState([]); //State to hold plants
-  const [searchTerm, setSearchTerm] = useState(""); //State for search term
+  const [plants, setPlants] = useState([]); // Core Deliverables: Manage plant state
+  const [searchTerm, setSearchTerm] = useState(""); // Core Deliverables: Manage search term
 
-  // Core Deliverables
-  // Fetch the plants from the server
+  // Core Deliverables: Fetch plants when app loads
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((res) => res.json())
       .then((data) => setPlants(data));
   }, []);
 
-  // Core Deliverables
-  // Function to add a new plant
-  const addPlant = (newPlant) => {
-    setPlants([...plants, newPlant]);
-  };
+  const addPlant = (newPlant) => setPlants([...plants, newPlant]); // Core Deliverables: Add new plant
 
-  // Advanced Deliverables
-  // Function to update a plant's price
+  // Advanced Deliverables: Update plant price
   const updatePlantPrice = (id, newPrice) => {
     fetch(`http://localhost:6001/plants/${id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: newPrice }),
     })
       .then((res) => res.json())
       .then((updatedPlant) => {
-        const updatedPlants = plants.map((plant) =>
-          plant.id === id ? updatedPlant : plant
-        );
-        setPlants(updatedPlants);
+        setPlants(plants.map((plant) => (plant.id === id ? updatedPlant : plant)));
       });
   };
 
-  // Advanced Deliverables
-  // Function to delete a plant
+  // Advanced Deliverables: Delete a plant
   const deletePlant = (id) => {
-    fetch(`http://localhost:6001/plants/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      const updatedPlants = plants.filter((plant) => plant.id !== id);
-      setPlants(updatedPlants);
+    fetch(`http://localhost:6001/plants/${id}`, { method: "DELETE" }).then(() => {
+      setPlants(plants.filter((plant) => plant.id !== id));
     });
   };
 
-  // Provide the state and functions to children components
   return (
     <PlantContext.Provider
-      value={{
-        plants,
-        addPlant, // Core Deliverables
-        updatePlantPrice, // Advanced Deliverables
-        deletePlant, // Advanced Deliverables
-        searchTerm,
-        setSearchTerm,
-      }}
+      value={{ plants, addPlant, updatePlantPrice, deletePlant, searchTerm, setSearchTerm }}
     >
       {children}
     </PlantContext.Provider>
@@ -70,3 +46,4 @@ function PlantProvider({ children }) {
 }
 
 export { PlantContext, PlantProvider };
+
